@@ -8,7 +8,7 @@
       <el-button type="info">Info</el-button>
       <el-button type="warning">Warning</el-button>
       <el-button type="danger">Danger</el-button>
-    </div>
+  </div>
 </template>
 
 <style scoped></style>
