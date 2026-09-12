@@ -9,9 +9,11 @@ const getCategory = async () => {
   console.log(res)
   categoryList.value = res.result
 }
+
 onMounted(() => {
   getCategory()
 })
+
 </script>
 
 <template>
