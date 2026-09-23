@@ -1,7 +1,11 @@
 <script setup>
 import { useCartStore } from '@/stores/cartStore'
+import { mergeCartAPI } from '@/apis/cart'
+import { useRouter } from 'vue-router'
+import { findNewCartListAPI } from '@/apis/cart'
 
 const cartStore = useCartStore()
+const router = useRouter()
 
 //单选回调
 const singleCheck = (i,selected) => {
@@ -11,6 +15,16 @@ const singleCheck = (i,selected) => {
 // 全选回调
 const allCheck = (selected) => {
     cartStore.allCheck(selected)
+}
+
+// 把本地 selected 同步到服务器
+const goCheckout = async () => {
+        await mergeCartAPI(cartStore.cartList.map(item => ({
+            skuId: item.skuId,
+            selected: item.selected,
+            count: item.count
+        })))
+router.push('/checkout')
 }
 
 </script>
@@ -87,7 +101,7 @@ const allCheck = (selected) => {
           <span class="red">¥ {{ cartStore.selectedPrice.toFixed(2) }}</span>
         </div>
         <div class="total">
-          <el-button size="large" type="primary" >下单结算</el-button>
+          <el-button size="large" type="primary" @click="goCheckout">下单结算</el-button>
         </div>
       </div>
     </div>
